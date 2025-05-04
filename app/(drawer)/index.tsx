@@ -1,15 +1,24 @@
-import { Stack } from 'expo-router';
+// screens/HomeScreen.tsx
 
-import { Container } from '~/components/Container';
-import { ScreenContent } from '~/components/ScreenContent';
+import { View, Text, TouchableOpacity } from "react-native";
+import { useTheme } from "../../context/ThemeContext";
 
-export default function Home() {
+const HomeScreen = () => {
+  const { theme, toggleTheme } = useTheme();
+
   return (
-    <>
-      <Stack.Screen options={{ title: 'Home' }} />
-      <Container>
-        <ScreenContent path="app/(drawer)/index.tsx" title="Home" />
-      </Container>
-    </>
+    <View className="flex-1 items-center justify-center bg-white dark:bg-black">
+      <Text className="text-2xl font-bold text-black dark:text-white mb-4">
+        Current Theme: {theme}
+      </Text>
+      <TouchableOpacity
+        onPress={toggleTheme}
+        className="bg-blue-500 px-6 py-3 rounded-lg"
+      >
+        <Text className="text-white font-semibold">Toggle Theme</Text>
+      </TouchableOpacity>
+    </View>
   );
-}
+};
+
+export default HomeScreen;
