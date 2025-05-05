@@ -7,18 +7,17 @@ export default function TabLayout() {
   const { theme } = useTheme();
   const isLight = theme === 'light';
   const { font } = useFont();
-  console.log('Font:', font);
 
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: isLight ? '#000000' : '#FFFFFF',
-        
+
         tabBarStyle: {
           overflow: 'hidden',
           marginHorizontal: 10,
-          justifyContent:'center',
+          justifyContent: 'center',
           alignItems: 'center',
           padding: 10,
           borderRadius: 16,

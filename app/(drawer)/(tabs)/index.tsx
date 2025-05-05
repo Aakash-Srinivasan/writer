@@ -1,5 +1,5 @@
 import { useFocusEffect } from 'expo-router';
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -37,7 +37,7 @@ const NotesListScreen = () => {
       setSpeakingModalVisible(true);
       setIsSpeaking(false); // Not speaking yet
       setIsLoading(true);   // Start loading
-  
+
       Speech.speak(text, {
         onStart: () => {
           setIsLoading(false); // Hide loading
@@ -58,16 +58,16 @@ const NotesListScreen = () => {
       });
     }
   };
-  
-  
-  
+
+
+
 
   const handleStop = () => {
     Speech.stop();
     setIsSpeaking(false);
     setSpeakingModalVisible(false);
   };
-  
+
 
   const fetchNotes = async () => {
     const data = await loadNotes();
@@ -136,45 +136,45 @@ const NotesListScreen = () => {
         contentContainerStyle={{ paddingBottom: 20 }}
         renderItem={({ item, index }) => (
           <TouchableOpacity
-          onPress={() => openModal(index)}
-          style={{ flex: 1, marginBottom: 16 }}
-        >
-          <View className="relative bg-white dark:bg-gray-900 p-5 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700"  style={{ minHeight: 170 }} >
-        
-            {/* Tap to Hear Icon - Top Right */}
-            <TouchableOpacity
-              onPress={() => handleSpeak(`${item.title}. ${item.content}`)}
-              className="absolute top-3 right-3 flex-row items-center bg-gray-200 dark:bg-gray-700 px-3 py-1.5 rounded-full z-10"
-            >
-              <Text
-                className="text-xs text-black dark:text-white mr-1"
-                style={{ fontFamily: `${font}-Medium` }}
+            onPress={() => openModal(index)}
+            style={{ flex: 1, marginBottom: 16 }}
+          >
+            <View className="relative bg-white dark:bg-gray-900 p-5 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700" style={{ minHeight: 170 }} >
+
+              {/* Tap to Hear Icon - Top Right */}
+              <TouchableOpacity
+                onPress={() => handleSpeak(`${item.title}. ${item.content}`)}
+                className="absolute top-3 right-3 flex-row items-center bg-gray-200 dark:bg-gray-700 px-3 py-1.5 rounded-full z-10"
               >
-                Tap to hear
+                <Text
+                  className="text-xs text-black dark:text-white mr-1"
+                  style={{ fontFamily: `${font}-Medium` }}
+                >
+                  Tap to hear
+                </Text>
+                <Entypo name="sound" size={18} color={isLight ? 'black' : 'white'} />
+              </TouchableOpacity>
+
+              {/* Title */}
+              <Text
+                className="text-xl text-black dark:text-white mb-2 pr-14 mt-6" // right padding to avoid overlapping
+                style={{ fontFamily: `${font}-SemiBold` }}
+              >
+                {item.title}
               </Text>
-              <Entypo name="sound" size={18} color={isLight ? 'black' : 'white'} />
-            </TouchableOpacity>
-        
-            {/* Title */}
-            <Text
-              className="text-xl text-black dark:text-white mb-2 pr-14 mt-6" // right padding to avoid overlapping
-              style={{ fontFamily: `${font}-SemiBold` }}
-            >
-              {item.title}
-            </Text>
-        
-            {/* Description */}
-            <Text
-              className="text-base text-gray-700 dark:text-gray-300"
-              numberOfLines={2}
-              style={{ fontFamily: `${font}-Regular` }}
-            >
-              {item.content}
-            </Text>
-          </View>
-        </TouchableOpacity>
-        
-        
+
+              {/* Description */}
+              <Text
+                className="text-base text-gray-700 dark:text-gray-300"
+                numberOfLines={2}
+                style={{ fontFamily: `${font}-Regular` }}
+              >
+                {item.content}
+              </Text>
+            </View>
+          </TouchableOpacity>
+
+
         )}
         ListEmptyComponent={
           <View className="flex-1 items-center justify-center py-10 px-4 align-items-center">
@@ -183,14 +183,14 @@ const NotesListScreen = () => {
               className="w-64 h-64 mb-4"
               resizeMode="cover"
             />
-            
+
           </View>
-        } 
+        }
         ListHeaderComponent={
           <Text className="text-2xl  mb-4 text-black dark:text-white" style={{ fontFamily: `${font}-SemiBold` }}>My Drafts</Text>
 
-        }/>
-        
+        } />
+
       {/* Modal */}
       <Modal
         visible={modalVisible}
@@ -288,44 +288,44 @@ const NotesListScreen = () => {
         </View>
       </Modal>
       <Modal
-  visible={speakingModalVisible}
-  transparent
-  animationType="fade"
-  onRequestClose={handleStop}
->
-  <View className="flex-1 justify-center items-center bg-black/70 px-4">
-  <View className="w-full bg-white dark:bg-[#1F2937] p-6 rounded-xl items-center">
-  <Text className="text-xl text-black dark:text-white mb-4" style={{ fontFamily: `${font}-SemiBold` }}>
-    Speaking...
-  </Text>
+        visible={speakingModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={handleStop}
+      >
+        <View className="flex-1 justify-center items-center bg-black/70 px-4">
+          <View className="w-full bg-white dark:bg-[#1F2937] p-6 rounded-xl items-center">
+            <Text className="text-xl text-black dark:text-white mb-4" style={{ fontFamily: `${font}-SemiBold` }}>
+              Speaking...
+            </Text>
 
-  {isLoading ? (
-    <Text className="text-base text-gray-500 mb-4" style={{ fontFamily: `${font}-Medium` }}>
-      Please wait a moment!!!
-    </Text>
-  ) : (
-    <>
-      {/* Replace this with your animated waveform component */}
-      <View className="w-20 h-20 bg-purple-500 rounded-full mb-4 animate-pulse" />
-      
-      <Text className="text-center text-black dark:text-white mb-4" style={{ fontFamily: `${font}-Regular` }}>
-        {speakingText}
-      </Text>
-    </>
-  )}
+            {isLoading ? (
+              <Text className="text-base text-gray-500 mb-4" style={{ fontFamily: `${font}-Medium` }}>
+                Please wait a moment!!!
+              </Text>
+            ) : (
+              <>
+                {/* Replace this with your animated waveform component */}
+                <View className="w-20 h-20 bg-purple-500 rounded-full mb-4 animate-pulse" />
 
-  {!isLoading && (
-    <View className="flex-row gap-3">
+                <Text className="text-center text-black dark:text-white mb-4" style={{ fontFamily: `${font}-Regular` }}>
+                  {speakingText}
+                </Text>
+              </>
+            )}
 
-      <TouchableOpacity onPress={handleStop} className="bg-red-600 px-4 py-2 rounded-lg">
-        <Text className="text-white" style={{ fontFamily: `${font}-SemiBold` }}>Stop</Text>
-      </TouchableOpacity>
-    </View>
-  )}
-</View>
+            {!isLoading && (
+              <View className="flex-row gap-3">
 
-  </View>
-</Modal>
+                <TouchableOpacity onPress={handleStop} className="bg-red-600 px-4 py-2 rounded-lg">
+                  <Text className="text-white" style={{ fontFamily: `${font}-SemiBold` }}>Stop</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+
+        </View>
+      </Modal>
 
     </View>
   );
