@@ -1,10 +1,14 @@
 import { Tabs } from 'expo-router';
+import { useFont } from '~/app/_layout';
 import { TabBarIcon } from '~/components/TabBarIcon';
 import { useTheme } from '~/context/ThemeContext';
 
 export default function TabLayout() {
   const { theme } = useTheme();
   const isLight = theme === 'light';
+  const { font } = useFont();
+    console.log('Font:', font);
+  
   return (
     <Tabs
       screenOptions={{
@@ -20,6 +24,10 @@ export default function TabLayout() {
         options={{
           title: 'Notes',
           tabBarIcon: ({ color }) => <TabBarIcon name="clipboard-notes" color={color} />,
+          tabBarLabelStyle: {
+            fontFamily: `${font}-Regular`,
+            fontSize: 12,
+          },
         }}
       />
       <Tabs.Screen
@@ -27,6 +35,10 @@ export default function TabLayout() {
         options={{
           title: 'Create',
           tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
+          tabBarLabelStyle: {
+            fontFamily: `${font}-Regular`,
+            fontSize: 12,
+          },
         }}
       />
     </Tabs>

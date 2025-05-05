@@ -11,11 +11,13 @@ import {
 import { deleteNote, loadNotes, updateNote, Note } from '../../../utils/storage';
 import { useTheme } from '../../../context/ThemeContext';
 import { Entypo } from '@expo/vector-icons';
+import { useFont } from '~/app/_layout';
+
 
 const NotesListScreen = () => {
   const { theme } = useTheme();
   const isLight = theme === 'light';
-
+  const { font } = useFont();
   const [notes, setNotes] = useState<Note[]>([]);
   const [selectedNoteIndex, setSelectedNoteIndex] = useState<number | null>(null);
   const [editedTitle, setEditedTitle] = useState('');
@@ -73,16 +75,6 @@ const NotesListScreen = () => {
     }
   };
   
-  const handleDelete = async () => {
-    if (selectedNoteIndex !== null) {
-      await deleteNote(selectedNoteIndex);
-      setSelectedNoteIndex(null); // Clear index first
-      setModalVisible(false);     // Close modal before re-render
-      await fetchNotes();         // Refresh notes safely
-    }
-  };
-  
-
   const formatDate = (iso: string) =>
     new Date(iso).toLocaleString(undefined, {
       dateStyle: 'medium',
@@ -91,7 +83,7 @@ const NotesListScreen = () => {
 
   return (
     <View className="flex-1 bg-white dark:bg-black p-4">
-      <Text className="text-2xl font-bold mb-4 text-black dark:text-white">My Notes</Text>
+      <Text className="text-2xl  mb-4 text-black dark:text-white"  style={{ fontFamily: `${font}-Regular` }}>My Notes</Text>
 
       <FlatList
         data={notes}
@@ -105,10 +97,11 @@ const NotesListScreen = () => {
             style={{ flex: 1, marginBottom: 12 }}
           >
             <View className="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl min-h-[100px] justify-center">
-              <Text className="text-lg font-semibold text-black dark:text-white mb-1">{item.title}</Text>
+              <Text className="text-2xl text-black dark:text-white mb-1"  style={{ fontFamily: `${font}-SemiBold` }}>{item.title}</Text>
               <Text
-                className="text-gray-700 dark:text-gray-300"
+                className=" text-md text-gray-700 dark:text-gray-300"
                 numberOfLines={2}
+                style={{ fontFamily: `${font}-Regular` }}
               >
                 {item.content}
               </Text>
@@ -132,7 +125,7 @@ const NotesListScreen = () => {
         <View className="flex-1 justify-center items-center bg-black/50 px-4">
           <View className="w-full bg-white dark:bg-[#1F2937] p-6 rounded-xl">
             <View className="flex-row justify-between items-center mb-4">
-              <Text className="text-xl font-bold text-black dark:text-white">Edit Note</Text>
+              <Text className="text-xl font-bold text-black dark:text-white" style={{ fontFamily: `${font}-SemiBold` }}>Edit Note</Text>
               <TouchableOpacity
                 onPress={() => setModalVisible(false)}
                 className="p-2"
@@ -146,6 +139,7 @@ const NotesListScreen = () => {
               onChangeText={setEditedTitle}
               placeholder="Title"
               className="bg-gray-100 dark:bg-gray-700 text-black dark:text-white p-3 rounded-lg mb-3"
+              style={{ fontFamily: `${font}-Medium` }}
             />
             <TextInput
               multiline
@@ -153,15 +147,16 @@ const NotesListScreen = () => {
               onChangeText={setEditedContent}
               className="bg-gray-100 dark:bg-gray-700 text-black dark:text-white p-3 rounded-lg h-32"
               placeholder="Note..."
+              style={{ fontFamily: `${font}-Medium` }}
             />
 
             {selectedNoteIndex !== null && (
               <View className="mt-4">
-                <Text className="text-xs text-gray-600 dark:text-gray-400">
+                <Text className="text-xs text-gray-600 dark:text-gray-400" style={{ fontFamily: `${font}-Regular` }}>
                   Created At: {formatDate(notes[selectedNoteIndex].createdAt)}
                 </Text>
                 {notes[selectedNoteIndex].updatedAt && (
-                  <Text className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                  <Text className="text-xs text-gray-600 dark:text-gray-400 mt-1" style={{ fontFamily: `${font}-Regular` }}>
                     Updated At: {formatDate(notes[selectedNoteIndex].updatedAt!)}
                   </Text>
                 )}
@@ -173,13 +168,14 @@ const NotesListScreen = () => {
                 onPress={handleUpdate}
                 className="bg-green-600 flex-1 p-3 rounded-lg"
               >
-                <Text className="text-white text-center">Save</Text>
+                <Text className="text-white text-center" style={{ fontFamily: `${font}-SemiBold` }}
+                >Save</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={confirmDelete}
                 className="bg-red-600 flex-1 p-3 rounded-lg"
               >
-                <Text className="text-white text-center">Delete</Text>
+                <Text className="text-white text-center" style={{ fontFamily: `${font}-SemiBold` }}>Delete</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -193,7 +189,7 @@ const NotesListScreen = () => {
 >
   <View className="flex-1 justify-center items-center bg-black/50 px-4">
     <View className="bg-white dark:bg-gray-800 p-6 rounded-xl w-full max-w-md">
-      <Text className="text-lg font-semibold text-black dark:text-white mb-4">
+      <Text className="text-lg font-semibold text-black dark:text-white mb-4" style={{ fontFamily: `${font}-SemiBold` }}>
         Are you sure you want to delete this note?
       </Text>
 
@@ -202,14 +198,14 @@ const NotesListScreen = () => {
           onPress={() => setShowConfirmDelete(false)}
           className="flex-1 bg-gray-400 p-3 rounded-lg"
         >
-          <Text className="text-center text-white">Cancel</Text>
+          <Text className="text-center text-white" style={{ fontFamily: `${font}-SemiBold` }}>Cancel</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={handleDeleteConfirmed}
           className="flex-1 bg-red-600 p-3 rounded-lg"
         >
-          <Text className="text-center text-white">Delete</Text>
+          <Text className="text-center text-white" style={{ fontFamily: `${font}-SemiBold` }}>Delete</Text>
         </TouchableOpacity>
       </View>
     </View>
