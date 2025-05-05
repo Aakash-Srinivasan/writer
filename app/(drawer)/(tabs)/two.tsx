@@ -44,11 +44,11 @@ const CreateNoteScreen = () => {
 
   return (
     <View className="flex-1 bg-white dark:bg-black p-4">
-      <Text className="text-2xl font-bold mb-4 text-black dark:text-white"  style={{ fontFamily: `${font}-SemiBold` }}>Create Note</Text>
+      <Text className="text-2xl  mb-4 text-black dark:text-white"  style={{ fontFamily: `${font}-SemiBold` }}>Create a Draft</Text>
       <TextInput
         value={title}
         onChangeText={setTitle}
-        placeholder="Title"
+        placeholder="Title of Draft"
         placeholderTextColor={isLight ? '#6B7280' : '#9CA3AF'}
         className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-3"
         style={{ fontFamily: `${font}-Medium` }}
@@ -56,11 +56,11 @@ const CreateNoteScreen = () => {
       <TextInput
         value={text}
         onChangeText={setText}
-        placeholder="Enter your note..."
+        placeholder="Enter your Thoughts...✨"
         placeholderTextColor={isLight ? '#6B7280' : '#9CA3AF'}
         multiline
         className="text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 rounded-lg h-40"
-        style={{ fontFamily: `${font}-Medium` }}
+        style={{ fontFamily: `${font}-Medium`, textAlignVertical: 'top', }}
       />
       <TouchableOpacity
         onPress={addNote}

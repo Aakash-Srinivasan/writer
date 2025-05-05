@@ -6,7 +6,7 @@ export const TabBarIcon = (props: {
   name: React.ComponentProps<typeof Foundation>['name'];
   color: string;
 }) => {
-  return <Foundation size={28} style={styles.tabBarIcon} {...props} />;
+  return <Foundation size={24} style={styles.tabBarIcon} {...props} />;
 
 };
 
