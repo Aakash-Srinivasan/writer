@@ -1,16 +1,23 @@
-import { Entypo, Feather, FontAwesome5 } from '@expo/vector-icons';
-import { Drawer } from 'expo-router/drawer';
-import {
-  DrawerContentScrollView,
-  DrawerItemList,
-} from '@react-navigation/drawer';
-import { useTheme } from '../../context/ThemeContext';
-import { useFont } from '../_layout'; // adjust path if needed
-import { View, Text, Pressable, Image, Linking, TouchableOpacity, Animated } from 'react-native';
+import { Entypo, Feather } from '@expo/vector-icons';
+import Constants from 'expo-constants';
+import { Drawer, DrawerContentScrollView, DrawerItemList } from 'expo-router/drawer';
 import { useRef, useEffect } from 'react';
+import { View, Text, Pressable, Image, Linking, TouchableOpacity, Animated } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+
+import { useTheme, ThemePreference } from '../../context/ThemeContext';
+import { useFont } from '../_layout'; // adjust path if needed
+
+const appVersion = Constants.expoConfig?.version ?? '1.0.0';
+
+const THEME_OPTIONS: { key: ThemePreference; label: string }[] = [
+  { key: 'light', label: 'Light' },
+  { key: 'dark', label: 'Dark' },
+  { key: 'system', label: 'Auto' },
+];
 
 const DrawerLayout = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, preference, setThemePreference } = useTheme();
   const { font, setFont } = useFont();
 
   const isLight = theme === 'light';
@@ -52,11 +59,38 @@ const DrawerLayout = () => {
         </Text>
         <Image source={require('../../assets/logo.png')} className="w-24 h-24 rounded-full mb-4" />
 
-        <Text className="text-sm text-gray-600 dark:text-gray-300 mb-6" style={{ fontFamily: `${font}-Regular` }}>
-          Version: 1.0.0
+        <Text className="text-sm text-gray-600 dark:text-gray-300 mb-4" style={{ fontFamily: `${font}-Regular` }}>
+          Version: {appVersion}
           {"\n"}Developed by: Aakash Srinivasan
           {"\n"}App name: Drafter App
         </Text>
+
+        <Text
+          className="text-base font-bold mb-2 text-black dark:text-white"
+          style={{ fontFamily: `${font}-Regular` }}
+        >
+          Appearance
+        </Text>
+        <View className="flex-row gap-2 mb-6">
+          {THEME_OPTIONS.map((opt) => {
+            const isActive = preference === opt.key;
+            return (
+              <Pressable
+                key={opt.key}
+                onPress={() => setThemePreference(opt.key)}
+                className={`px-4 py-2 rounded-lg ${isActive ? 'bg-blue-500' : 'bg-gray-200 dark:bg-gray-700'}`}
+              >
+                <Text
+                  className={`text-sm ${isActive ? 'text-white' : 'text-black dark:text-white'}`}
+                  style={{ fontFamily: `${font}-Medium` }}
+                >
+                  {opt.label}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+
         <TouchableOpacity
           onPress={handlePress}
           className={`mt-4 px-6 py-3 flex-row justify-center gap-2 rounded-lg bg-blue-500 ${theme === 'light' ? 'shadow-md' : 'shadow-lg'}`}
@@ -166,8 +200,8 @@ const DrawerLayout = () => {
       className="mr-4 p-3 rounded-full bg-gray-200 dark:bg-gray-700 shadow-md dark:shadow-lg"
     >
       <Animated.View style={{ transform: [{ rotate: spin }] }}>
-        <FontAwesome5
-          name={isLight ? 'cloud-moon' : 'cloud-sun'}
+        <Feather
+          name={isLight ? 'moon' : 'sun'}
           size={22}
           color={isLight ? '#1F2937' : '#FACC15'}
         />
@@ -179,14 +213,14 @@ const DrawerLayout = () => {
       <Drawer.Screen
         name="(tabs)"
         options={{
-          headerTitle: 'Wellcome Drafter',
+          headerTitle: 'Welcome to Drafter',
           drawerLabel: 'Drafter',
           drawerIcon: ({ size, color }) => (
             <Entypo name="book" size={size} color={color} />
           ),
           headerTitleStyle: {
             fontFamily: `${font}-SemiBold`,
-            fontSize: 20,
+            fontSize: RFValue(20),
           }
         }}
       />
