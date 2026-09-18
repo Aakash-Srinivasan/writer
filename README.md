@@ -32,8 +32,8 @@ Drafter is a beautifully designed React Native app built with Expo. It’s a loc
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/drafter-notes-app.git
-cd drafter-notes-app
+git clone https://github.com/Aakash-Srinivasan/writer.git
+cd writer
 ````
 
 ### 2. Install dependencies
@@ -61,12 +61,6 @@ npx expo start
 
 ---
 
-## 📹 Demo Video
-
-[Watch the video demo](https://your-demo-video-link.com)
-
----
-
 ## 📦 Download the App
 
 Coming soon on [Expo](https://expo.dev) or share the `.apk`/.`ipa` if available.
@@ -75,6 +69,6 @@ Coming soon on [Expo](https://expo.dev) or share the `.apk`/.`ipa` if available.
 
 ## 📄 License
 
-MIT © [Aakash Srinivasan](https://github.com/aakashsrinivasan)
+MIT © [Aakash Srinivasan](https://github.com/Aakash-Srinivasan)
 
 ---

@@ -1,12 +1,14 @@
 import '../global.css';
-import { Stack } from 'expo-router';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { ThemeProvider, useTheme } from '~/context/ThemeContext';
-import { StatusBar } from 'expo-status-bar';
-import * as Font from 'expo-font';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Font from 'expo-font';
+import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState, createContext, useContext } from 'react';
 import { Text, View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import { ThemeProvider, useTheme } from '~/context/ThemeContext';
 
 // FontContext
 const FontContext = createContext({
@@ -88,13 +90,9 @@ function ThemedRoot() {
 
   return (
     <>
-      <StatusBar
-        style={theme === 'light' ? 'dark' : 'light'}
-        backgroundColor={theme === 'light' ? 'white' : 'black'}
-      />
+      <StatusBar style={theme === 'light' ? 'dark' : 'light'} />
       <Stack>
         <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ title: 'Modal', presentation: 'modal' }} />
       </Stack>
     </>
   );
@@ -104,11 +102,13 @@ function ThemedRoot() {
 export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider>
-        <FontProvider>
-          <ThemedRoot />
-        </FontProvider>
-      </ThemeProvider>
+      <SafeAreaProvider>
+        <ThemeProvider>
+          <FontProvider>
+            <ThemedRoot />
+          </FontProvider>
+        </ThemeProvider>
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }
